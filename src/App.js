@@ -1,28 +1,23 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/navegacion/Navbar';
-import Inicio from './components/paginas/Inicio';
-import Digitalsport from './components/paginas/Digitalsport';
-import Items from './components/paginas/Items';
-
-
-
+import Navbar from './components/Navbar/Navbar';
+import Digitalsport from './components/pages/Digitalsport/Digitalsport';
+import Categorias from './components/pages/Categorias/Categorias';
 
 function App() {
   return (
     <div className="App">
 
       <Router>
-        <Navbar/>
+        <Navbar brand={"Digital Sport"} />
+      
         <Routes>
-          <Route path='/' exact element={<Inicio/>}/>
-          <Route path='/digitalsport' element={<Digitalsport/>}/>
-          <Route path='/items' element={<Items/>}/>
+          <Route path='/' exact element={<Digitalsport/>}/>
+          <Route path='/:categoria' element={<Categorias />}/>
         </Routes>
       </Router>
 
     </div>
-
   );
 }
 
