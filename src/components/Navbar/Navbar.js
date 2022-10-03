@@ -23,9 +23,9 @@ const Navbar = (props) => {
                                     Categorias
                                 </a>
                                 <ul className="dropdown-menu">
-                                    <li><Link className="dropdown-item" to='/hombre'>Hombre</Link></li>
-                                    <li><Link className="dropdown-item" to='/mujer'>Mujer</Link></li>
-                                    <li><Link className="dropdown-item" to='/niños'>Niños</Link></li>
+                                    <li><Link className="dropdown-item" to='/category/hombre'>Hombre</Link></li>
+                                    <li><Link className="dropdown-item" to='/category/mujer'>Mujer</Link></li>
+                                    <li><Link className="dropdown-item" to='/category/niños'>Niños</Link></li>
                                 </ul>
                             </li>
                         </ul>

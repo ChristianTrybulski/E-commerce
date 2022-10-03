@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import ListItem from "./ListItem/ListItem";
+import './ItemDetailContainer.css';
 
 const categorias = { 
     "hombre": [
@@ -18,22 +18,18 @@ const categorias = {
     ],
 }
 
-const ItemListContainer = (props) => {
-    const { categoryId } = useParams();
-    console.log("Categoria: ", categoryId);
-
-    let productsToShow = [];
-    if (categoryId !== undefined) {
-        productsToShow = categorias[categoryId];
-    } else {
-        productsToShow = Object.values(categorias).flat();
-    }
+const ItemDetailContainer = (props) => {
+    const { id } = useParams();
+    const product = Object.values(categorias).flat()[id];
 
     return (
-        <div>
-            <h3>{props.greeting}</h3>
-            {productsToShow.map(producto => <ListItem producto={producto} key={producto.id}></ListItem>)}
+        <div className="card card-product">
+            <img src={product.imagen} class="card-img-top" alt="imagen"></img>
+            <div className="card-body">
+                <h5 className="card-title">{product.nombre}</h5>
+                <p className="card-text">Precio: {product.precio}</p>
+            </div>
         </div>
     );
 }
-export default ItemListContainer
+export default ItemDetailContainer
