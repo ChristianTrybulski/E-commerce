@@ -10,7 +10,7 @@ const ItemListContainer = ({ greeting }) => {
     
     useEffect(() => {
         getProductsByCategoryPromise(categoryId)
-          .then((res) => { setProductList(res); console.log("ProductList", res) })
+          .then((res) => setProductList(res))
           .catch(() => console.log('hubo un error, intente mas tarde'))
           .finally(() => setLoading(false));
       }, [categoryId]);
