@@ -1,34 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
 import './ItemDetailContainer.css';
+import { getProductByIdPromise } from '../../async-mock/products';
 
-const categorias = { 
-    "hombre": [
-        { id: 0, nombre: "Botines", precio: "$2115,00", imagen: "/imgs/botines.jpg" },
-        { id: 1, nombre: "Zapatilla", precio: "$3550,00", imagen: "/imgs/zapatilla.jpg" },
-        { id: 2, nombre: "Zapatilla 2", precio: "$3550,00", imagen: "/imgs/zapatilla2.jpg" },
-    ],
-    "mujer": [
-        { id: 3, nombre: "Producto 3", precio: "$15,00", imagen: "/imgs/botines.jpg" },
-        { id: 4, nombre: "Producto 4", precio: "$50,00" }
-    ],
-    "niños": [
-        { id: 5, nombre: "Producto 5", precio: "$5,00" },
-        { id: 6, nombre: "Producto 6", precio: "$10,00" }
-    ],
-}
-
-const ItemDetailContainer = (props) => {
+const ItemDetailContainer = () => {
     const { id } = useParams();
-    const product = Object.values(categorias).flat()[id];
+    const [product, setProduct] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        getProductByIdPromise(id)
+          .then((res) => setProduct(res))
+          .catch(() => console.log('hubo un error, intente mas tarde'))
+          .finally(() => setLoading(false));
+      }, [id]);
 
     return (
-        <div className="card card-product">
-            <img src={product.imagen} class="card-img-top" alt="imagen"></img>
-            <div className="card-body">
-                <h5 className="card-title">{product.nombre}</h5>
-                <p className="card-text">Precio: {product.precio}</p>
-            </div>
+        <div>
+            {loading ? (
+                <p>Cargando...</p>
+            ) : (
+                <div>  
+                    <h1>Detalle del producto</h1>
+                    <div className="card card-product">
+                        <img src={product.imagen} className="card-img-top" alt="imagen"></img>
+                        <div className="card-body">
+                            <h5 className="card-title">{product.nombre}</h5>
+                            <p className="card-text">Precio: {product.precio}</p>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

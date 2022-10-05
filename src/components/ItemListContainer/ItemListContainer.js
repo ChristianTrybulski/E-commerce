@@ -1,38 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
 import ListItem from "./ListItem/ListItem";
+import { getProductsByCategoryPromise } from '../../async-mock/products';
 
-const categorias = { 
-    "hombre": [
-        { id: 0, nombre: "Botines", precio: "$2115,00", imagen: "/imgs/botines.jpg" },
-        { id: 1, nombre: "Zapatilla", precio: "$3550,00", imagen: "/imgs/zapatilla.jpg" },
-        { id: 2, nombre: "Zapatilla 2", precio: "$3550,00", imagen: "/imgs/zapatilla2.jpg" },
-    ],
-    "mujer": [
-        { id: 3, nombre: "Producto 3", precio: "$15,00", imagen: "/imgs/botines.jpg" },
-        { id: 4, nombre: "Producto 4", precio: "$50,00" }
-    ],
-    "niños": [
-        { id: 5, nombre: "Producto 5", precio: "$5,00" },
-        { id: 6, nombre: "Producto 6", precio: "$10,00" }
-    ],
-}
-
-const ItemListContainer = (props) => {
+const ItemListContainer = ({ greeting }) => {
     const { categoryId } = useParams();
-    console.log("Categoria: ", categoryId);
-
-    let productsToShow = [];
-    if (categoryId !== undefined) {
-        productsToShow = categorias[categoryId];
-    } else {
-        productsToShow = Object.values(categorias).flat();
-    }
+    const [productList, setProductList] = useState([]);
+    const [loading, setLoading] = useState(true);
+    
+    useEffect(() => {
+        getProductsByCategoryPromise(categoryId)
+          .then((res) => { setProductList(res); console.log("ProductList", res) })
+          .catch(() => console.log('hubo un error, intente mas tarde'))
+          .finally(() => setLoading(false));
+      }, [categoryId]);
 
     return (
         <div>
-            <h3>{props.greeting}</h3>
-            {productsToShow.map(producto => <ListItem producto={producto} key={producto.id}></ListItem>)}
+            <h3>{greeting}</h3>
+            {loading ? (
+                <p>Cargando...</p>
+            ) : (
+                productList.map(producto => <ListItem producto={producto} key={producto.id}></ListItem>)
+            )}
         </div>
     );
 }
