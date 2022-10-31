@@ -11,7 +11,7 @@ const ItemDetailContainer = () => {
     useEffect(() => {
         getProductByIdPromise(id)
           .then((res) => setProduct(res))
-          .catch(() => console.log('hubo un error, intente mas tarde'))
+          //.catch(() => console.log('hubo un error, intente mas tarde'))
           .finally(() => setLoading(false));
       }, [id]);
 

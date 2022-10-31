@@ -1,8 +1,8 @@
 import React from "react";
-import './ListItem.css';
+import './ItemList.css';
 import { Link } from "react-router-dom";
 
-const ListItem = ({producto}) => {
+const ItemList = ({producto}) => {
     return (
         <div className="card card-product">
             <img src={producto.imagen} className="card-img-top" alt="imagen"></img>
@@ -14,4 +14,4 @@ const ListItem = ({producto}) => {
         </div>
     );
 }
-export default ListItem
+export default ItemList

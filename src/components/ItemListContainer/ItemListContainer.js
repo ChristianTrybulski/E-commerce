@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
-import ListItem from "./ListItem/ListItem";
+import ItemList from "./ItemList/ItemList";
 import { getProductsByCategoryPromise } from '../../async-mock/products';
 
 const ItemListContainer = ({ greeting }) => {
@@ -11,7 +11,7 @@ const ItemListContainer = ({ greeting }) => {
     useEffect(() => {
         getProductsByCategoryPromise(categoryId)
           .then((res) => setProductList(res))
-          .catch(() => console.log('hubo un error, intente mas tarde'))
+          //.catch(() => console.log('hubo un error, intente mas tarde'))
           .finally(() => setLoading(false));
       }, [categoryId]);
 
@@ -21,7 +21,7 @@ const ItemListContainer = ({ greeting }) => {
             {loading ? (
                 <p>Cargando...</p>
             ) : (
-                productList.map(producto => <ListItem producto={producto} key={producto.id}></ListItem>)
+                productList.map(producto => <ItemList producto={producto} key={producto.id}></ItemList>)
             )}
         </div>
     );
